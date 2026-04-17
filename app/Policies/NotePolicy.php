@@ -31,9 +31,4 @@ class NotePolicy
   {
     return $user->id === $note->user_id || $user->isAdmin();
   }
-
-  public function download(User $user, Note $note): bool
-  {
-    return true;
-  }
 }

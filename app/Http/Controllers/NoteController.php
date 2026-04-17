@@ -101,11 +101,4 @@ class NoteController extends Controller
     return redirect()->route('notes.index')
       ->with('success', 'Note deleted.');
   }
-
-  public function download(Note $note)
-  {
-    $this->authorize('download', $note);
-
-    return Storage::disk('private')->download($note->file_path, $note->file_name);
-  }
 }

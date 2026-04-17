@@ -61,7 +61,6 @@ Open **`routes/web.php`**
 ```php
 Route::middleware('auth')->group(function () {
     Route::resource('notes', NoteController::class);
-    Route::get('/notes/{note}/download', [NoteController::class, 'download'])->name('notes.download');
 });
 ```
 

@@ -52,9 +52,6 @@
                                 <a href="{{ route('notes.show', $note) }}"
                                     class="text-xs text-indigo-600 hover:underline">View</a>
 
-                                <a href="{{ route('notes.download', $note) }}"
-                                    class="text-xs text-green-600 hover:underline">Download</a>
-
                                 @can('update', $note)
                                     <a href="{{ route('notes.edit', $note) }}"
                                         class="text-xs text-yellow-600 hover:underline">Edit</a>

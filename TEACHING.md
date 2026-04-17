@@ -2,7 +2,7 @@
 
 ## Teaching Guide: Authentication · Middleware · Authorization · Policy
 
-> **App:** Class Collab — students upload notes (PDF/DOCX/PPTX), others can view and download them.
+> **App:** Class Collab — students upload notes (PDF/DOCX/PPTX), others can view them.
 > **Stack:** Laravel 13 · Blade · Tailwind CSS · SQLite
 
 ---
@@ -44,7 +44,7 @@ erDiagram
         string   subject
         text     description   "nullable"
         string   file_path     "stored in storage/app/private/notes/"
-        string   file_name     "original filename for download"
+        string   file_name     "original uploaded filename"
         timestamp created_at
         timestamp updated_at
     }
@@ -104,11 +104,11 @@ flowchart TD
         Controller["NoteController\ne.g. edit(Note \$note)"]
     end
 
-    Controller -->|"\$this->authorize('update', \$note)\nTriggered on edit/delete/download"| PolicyCheck
+    Controller -->"|"\$this->authorize('update', \$note)\nTriggered on edit/delete"| PolicyCheck
 
     subgraph Authorization ["app/Policies/NotePolicy.php + AppServiceProvider.php"]
         PolicyCheck["Policy / Gate Check"]
-        Policy["NotePolicy\nupdate: owner only\ndelete: owner OR admin\ndownload: any auth user"]
+        Policy["NotePolicy\nupdate: owner only\ndelete: owner OR admin"]
         Gate["Gate\ndelete-any-note: isAdmin()"]
         PolicyCheck --> Policy
         PolicyCheck --> Gate
@@ -273,7 +273,6 @@ Request → [Middleware 1] → [Middleware 2] → Controller → Response
 ```php
 Route::middleware('auth')->group(function () {
     Route::resource('notes', NoteController::class);
-    Route::get('/notes/{note}/download', [NoteController::class, 'download'])->name('notes.download');
 });
 ```
 
@@ -446,12 +445,6 @@ class NotePolicy
     {
         return $user->id === $note->user_id || $user->isAdmin();
     }
-
-    // Any logged-in user can download a note
-    public function download(User $user, Note $note): bool
-    {
-        return true;
-    }
 }
 ```
 
@@ -492,12 +485,6 @@ public function destroy(Note $note): RedirectResponse
     Storage::disk('private')->delete($note->file_path);
     $note->delete();
     return redirect()->route('notes.index')->with('success', 'Note deleted.');
-}
-
-public function download(Note $note)
-{
-    $this->authorize('download', $note);  // ← calls NotePolicy::download($user, $note)
-    return Storage::disk('private')->download($note->file_path, $note->file_name);
 }
 ```
 

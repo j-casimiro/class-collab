@@ -35,12 +35,6 @@
                 @endif
 
                 <div class="flex flex-wrap items-center gap-3 border-t pt-4">
-                    {{-- Download: policy check happens in controller, link always visible to auth users --}}
-                    <a href="{{ route('notes.download', $note) }}"
-                        class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-md hover:bg-green-700 transition">
-                        Download {{ strtoupper(pathinfo($note->file_name, PATHINFO_EXTENSION)) }}
-                    </a>
-
                     @can('update', $note)
                         <a href="{{ route('notes.edit', $note) }}"
                             class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white text-sm font-semibold rounded-md hover:bg-yellow-600 transition">

@@ -20,7 +20,6 @@ Route::middleware('auth')->group(function () {
 
     // Notes resource routes
     Route::resource('notes', NoteController::class);
-    Route::get('/notes/{note}/download', [NoteController::class, 'download'])->name('notes.download');
 });
 
 require __DIR__ . '/auth.php';
