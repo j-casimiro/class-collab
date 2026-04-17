@@ -15,27 +15,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Admin user
-        $admin = User::factory()->create([
-            'name'     => 'Admin User',
-            'email'    => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'admin',
-        ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            ['name' => 'Admin User', 'password' => Hash::make('password'), 'role' => 'admin']
+        );
 
         // Student users
-        $student1 = User::factory()->create([
-            'name'     => 'Alice Student',
-            'email'    => 'alice@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'student',
-        ]);
+        $student1 = User::firstOrCreate(
+            ['email' => 'alice@example.com'],
+            ['name' => 'Alice Student', 'password' => Hash::make('password'), 'role' => 'student']
+        );
 
-        $student2 = User::factory()->create([
-            'name'     => 'Bob Student',
-            'email'    => 'bob@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'student',
-        ]);
+        $student2 = User::firstOrCreate(
+            ['email' => 'bob@example.com'],
+            ['name' => 'Bob Student', 'password' => Hash::make('password'), 'role' => 'student']
+        );
 
         // Sample notes (no actual file — placeholder paths for demo)
         $subjects = ['Mathematics', 'Physics', 'History', 'Computer Science'];
