@@ -6,7 +6,7 @@
             </h2>
             <a href="{{ route('notes.create') }}"
                 class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 transition">
-                Upload Note
+                New Note
             </a>
         </div>
     </x-slot>
@@ -23,7 +23,7 @@
 
             @if ($notes->isEmpty())
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-center text-gray-500">
-                    No notes yet. Be the first to upload one!
+                    No notes yet. Be the first to add one!
                 </div>
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

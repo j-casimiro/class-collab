@@ -47,8 +47,7 @@ class DatabaseSeeder extends Seeder
                 'title'       => $n['title'],
                 'subject'     => $n['subject'],
                 'description' => 'This is a sample note for demonstration purposes.',
-                'file_path'   => 'notes/sample.pdf',
-                'file_name'   => 'sample.pdf',
+                'content'     => 'Sample content for ' . $n['title'] . '. Edit this note to add real content.',
             ]);
         }
     }

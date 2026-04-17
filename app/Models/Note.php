@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['user_id', 'title', 'subject', 'description', 'file_path', 'file_name'])]
+#[Fillable(['user_id', 'title', 'subject', 'description', 'content'])]
 class Note extends Model
 {
   use HasFactory;

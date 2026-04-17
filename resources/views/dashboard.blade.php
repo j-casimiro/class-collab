@@ -23,7 +23,7 @@
                 </div>
                 <a href="{{ route('notes.create') }}"
                     class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 transition">
-                    Upload a Note
+                    New Note
                 </a>
             </div>
 
@@ -40,8 +40,8 @@
                 @endphp
 
                 @if ($myNotes->isEmpty())
-                    <p class="text-sm text-gray-500">You haven't uploaded any notes yet.
-                        <a href="{{ route('notes.create') }}" class="text-indigo-600 hover:underline">Upload your first
+                    <p class="text-sm text-gray-500">You haven't added any notes yet.
+                        <a href="{{ route('notes.create') }}" class="text-indigo-600 hover:underline">Add your first
                             note</a>.
                     </p>
                 @else

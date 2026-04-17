@@ -34,6 +34,9 @@
                     <p class="text-gray-700 mb-6">{{ $note->description }}</p>
                 @endif
 
+                <div class="prose max-w-none mb-6 whitespace-pre-wrap text-gray-800 leading-relaxed">
+                    {{ $note->content }}</div>
+
                 <div class="flex flex-wrap items-center gap-3 border-t pt-4">
                     @can('update', $note)
                         <a href="{{ route('notes.edit', $note) }}"
