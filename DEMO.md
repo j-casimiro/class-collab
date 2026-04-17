@@ -72,7 +72,6 @@ Route::middleware('auth')->group(function () {
 public function destroy(Note $note): RedirectResponse
 {
     // ← NO authorization check here yet
-    Storage::disk('private')->delete($note->file_path);
     $note->delete();
     return redirect()->route('notes.index')->with('success', 'Note deleted.');
 }
@@ -89,7 +88,7 @@ public function user(): BelongsTo
 }
 ```
 
-> "Every note belongs to the user who uploaded it. We'll use this to enforce ownership."
+> "Every note belongs to the user who wrote it. We'll use this to enforce ownership."
 
 ---
 
@@ -295,7 +294,7 @@ Open **`app/Policies/NotePolicy.php`** — fill in the methods:
 public function viewAny(User $user): bool { return true; }
 public function view(User $user, Note $note): bool { return true; }
 
-// Anyone logged in can upload
+// Anyone logged in can create a note
 public function create(User $user): bool { return true; }
 
 // Only the owner can edit
@@ -309,9 +308,6 @@ public function delete(User $user, Note $note): bool
 {
     return $user->id === $note->user_id || $user->isAdmin();
 }
-
-// Anyone can download
-public function download(User $user, Note $note): bool { return true; }
 ```
 
 > "The key difference from a Gate: the policy method receives the model instance — `$note` — so we can compare `$user->id === $note->user_id`."

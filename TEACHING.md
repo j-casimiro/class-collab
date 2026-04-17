@@ -2,7 +2,7 @@
 
 ## Teaching Guide: Authentication · Middleware · Authorization · Policy
 
-> **App:** Class Collab — students upload notes (PDF/DOCX/PPTX), others can view them.
+> **App:** Class Collab — students write and share notes, others can read them.
 > **Stack:** Laravel 13 · Blade · Tailwind CSS · SQLite
 
 ---
@@ -43,8 +43,7 @@ erDiagram
         string   title
         string   subject
         text     description   "nullable"
-        string   file_path     "stored in storage/app/private/notes/"
-        string   file_name     "original uploaded filename"
+        longtext content
         timestamp created_at
         timestamp updated_at
     }
@@ -58,7 +57,7 @@ erDiagram
         int      last_activity
     }
 
-    USERS ||--o{ NOTES    : "uploads (hasMany / belongsTo)"
+    USERS ||--o{ NOTES    : "writes (hasMany / belongsTo)"
     USERS ||--o{ SESSIONS : "is tracked by"
 ```
 
@@ -66,7 +65,7 @@ erDiagram
 
 | Relationship                     | Direction        | Code                             |
 | -------------------------------- | ---------------- | -------------------------------- |
-| A user uploads many notes        | `User → Note`    | `User::hasMany(Note::class)`     |
+| A user writes many notes         | `User → Note`    | `User::hasMany(Note::class)`     |
 | A note belongs to one user       | `Note → User`    | `Note::belongsTo(User::class)`   |
 | Laravel tracks sessions per user | `User → Session` | Handled automatically by Laravel |
 
@@ -428,7 +427,7 @@ class NotePolicy
         return true;
     }
 
-    // Any logged-in user can upload a note
+    // Any logged-in user can create a note
     public function create(User $user): bool
     {
         return true;
@@ -482,7 +481,6 @@ public function update(Request $request, Note $note): RedirectResponse
 public function destroy(Note $note): RedirectResponse
 {
     $this->authorize('delete', $note);  // ← calls NotePolicy::delete($user, $note)
-    Storage::disk('private')->delete($note->file_path);
     $note->delete();
     return redirect()->route('notes.index')->with('success', 'Note deleted.');
 }
@@ -636,7 +634,7 @@ Run `php artisan db:seed` to populate the database with these test accounts.
 | Alice Student | `alice@example.com` | `password` | student |
 | Bob Student   | `bob@example.com`   | `password` | student |
 
-**Seeded notes (no actual file — demo records):**
+**Seeded notes:**
 
 | Title                   | Subject          | Owner |
 | ----------------------- | ---------------- | ----- |
