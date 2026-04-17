@@ -103,7 +103,7 @@ flowchart TD
         Controller["NoteController\ne.g. edit(Note \$note)"]
     end
 
-    Controller -->"|"\$this->authorize('update', \$note)\nTriggered on edit/delete"| PolicyCheck
+    Controller -->|"\$this->authorize('update', \$note)\nTriggered on edit/delete"| PolicyCheck
 
     subgraph Authorization ["app/Policies/NotePolicy.php + AppServiceProvider.php"]
         PolicyCheck["Policy / Gate Check"]
