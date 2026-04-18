@@ -47,6 +47,7 @@ class NoteController extends Controller
   public function edit(Note $note): View
   {
     $this->authorize('update', $note);
+    Gate::authorize('edit-any-note');
 
     return view('notes.edit', compact('note'));
   }

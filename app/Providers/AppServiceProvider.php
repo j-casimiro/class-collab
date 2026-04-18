@@ -38,5 +38,6 @@ class AppServiceProvider extends ServiceProvider
 
         // Gate: simple one-off check (admins can delete ANY note)
         Gate::define('delete-any-note', fn(User $user) => $user->isAdmin());
+        Gate::define('edit-any-note', fn(User $user) => $user->isAdmin());
     }
 }
