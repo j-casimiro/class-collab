@@ -57,7 +57,7 @@
                                         class="text-xs text-yellow-600 hover:underline">Edit</a>
                                 @endcan
 
-                                @can('delete', $note)
+                                @can('delete-any-note')
                                     <form action="{{ route('notes.destroy', $note) }}" method="POST"
                                         onsubmit="return confirm('Delete this note?')">
                                         @csrf

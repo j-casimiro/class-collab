@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class NoteController extends Controller
@@ -69,7 +70,7 @@ class NoteController extends Controller
 
   public function destroy(Note $note): RedirectResponse
   {
-    $this->authorize('delete', $note);
+    Gate::authorize('delete-any-note');
 
     $note->delete();
 
